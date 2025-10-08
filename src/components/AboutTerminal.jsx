@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "../styles/AboutTerminal.css";
 
 export default function AboutTerminal() {
@@ -7,6 +7,7 @@ export default function AboutTerminal() {
   const [cmdIndex, setCmdIndex] = useState(0);
   const [isReplaying, setIsReplaying] = useState(false);
   const [isTypingOutput, setIsTypingOutput] = useState(false);
+  const terminalRef = useRef(null);
 
   const commands = [
     {
@@ -33,7 +34,6 @@ export default function AboutTerminal() {
     },
   ];
 
-  // Tiny typing sound
   const playClick = () => {
     const audio = new Audio(
       "https://cdn.pixabay.com/audio/2022/03/15/audio_5d183d93e4.mp3"
@@ -52,6 +52,17 @@ export default function AboutTerminal() {
     }, 1000);
   };
 
+  // Dynamically adjust terminal height based on content
+  useEffect(() => {
+    if (terminalRef.current) {
+      const totalHeight = Array.from(terminalRef.current.children).reduce(
+        (sum, el) => sum + el.offsetHeight + 4, // 4px margin-bottom
+        0
+      );
+      terminalRef.current.style.height = totalHeight + "px";
+    }
+  }, [lines, currentText]);
+
   useEffect(() => {
     let loopTimer;
 
@@ -59,40 +70,43 @@ export default function AboutTerminal() {
       const { command, output } = commands[cmdIndex];
       let i = 0;
       let j = 0;
+      let outputTyping = false;
 
-      // Typing command first
       const typer = setInterval(() => {
-        setIsTypingOutput(false);
-        setCurrentText(command.slice(0, i + 1));
-        playClick();
-        i++;
+        if (!outputTyping) {
+          setIsTypingOutput(false);
+          setCurrentText(command.slice(0, i + 1));
+          playClick();
+          i++;
 
-        if (i === command.length) {
-          clearInterval(typer);
-          setLines((prev) => [...prev, { type: "command", text: `$ ${command}` }]);
-          setCurrentText("");
+          if (i === command.length) {
+            outputTyping = true;
+            clearInterval(typer);
 
-          // Start typing output
-          setIsTypingOutput(true);
-          const outputTyper = setInterval(() => {
-            setCurrentText(output.slice(0, j + 1));
-            playClick();
-            j++;
+            setTimeout(() => {
+              setLines((prev) => [...prev, { type: "command", text: `$ ${command}` }]);
+              setIsTypingOutput(true);
 
-            if (j === output.length) {
-              clearInterval(outputTyper);
-              setLines((prev) => [...prev, { type: "output", text: output }]);
-              setCurrentText("");
-              setCmdIndex((prev) => prev + 1);
-              setIsTypingOutput(false);
-            }
-          }, 25);
+              const outputTyper = setInterval(() => {
+                setCurrentText(output.slice(0, j + 1));
+                playClick();
+                j++;
+
+                if (j === output.length) {
+                  clearInterval(outputTyper);
+                  setLines((prev) => [...prev, { type: "output", text: output }]);
+                  setCurrentText("");
+                  setCmdIndex((prev) => prev + 1);
+                  setIsTypingOutput(false);
+                }
+              }, 25);
+            }, 500);
+          }
         }
       }, 40);
 
       return () => clearInterval(typer);
     } else {
-      // Restart loop after 75 seconds
       loopTimer = setTimeout(() => {
         handleReplay();
       }, 75000);
@@ -109,12 +123,13 @@ export default function AboutTerminal() {
           <span className="dot yellow"></span>
           <span className="dot green"></span>
           <span className="terminal-title">about_me.sh</span>
+
           <button className="replay-btn" onClick={handleReplay}>
             ↻ Replay
           </button>
         </div>
 
-        <div className="terminal-body">
+        <div className="terminal-body" ref={terminalRef}>
           {lines.map((line, idx) => (
             <div key={idx} className={`line ${line.type}`}>
               {line.text}

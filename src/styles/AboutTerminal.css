@@ -11,12 +11,10 @@
 .terminal-window {
   width: 100%;
   max-width: 800px;
-  height: 650px; /* tall enough for all outputs */
-  background-color: #000000;
+  background-color: #000;
   border-radius: 10px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden; /* no scroll */
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: opacity 1.5s ease;
   position: relative;
@@ -75,9 +73,9 @@
 /* Terminal body */
 .terminal-body {
   padding: 1.5rem;
-  min-height: 550px;
+  min-height: auto;
   line-height: 1.6;
-  overflow-y: auto;
+  overflow: hidden; /* prevent scroll */
 }
 
 .line {
