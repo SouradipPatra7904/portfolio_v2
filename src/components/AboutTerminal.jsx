@@ -29,8 +29,8 @@ export default function AboutTerminal() {
       output: new Date().toLocaleString(),
     },
     {
-      command: "echo 'Thanks for visiting!'",
-      output: "🚀 Stay curious. Keep building.",
+      command: "terminate && exit",
+      output: "Thanks for visiting!!! Feel free to connect with me on LinkedIn.",
     },
   ];
 
@@ -56,7 +56,7 @@ export default function AboutTerminal() {
   useEffect(() => {
     if (terminalRef.current) {
       const totalHeight = Array.from(terminalRef.current.children).reduce(
-        (sum, el) => sum + el.offsetHeight + 4, // 4px margin-bottom
+        (sum, el) => sum + el.offsetHeight + 10, // 4px margin-bottom
         0
       );
       terminalRef.current.style.height = totalHeight + "px";

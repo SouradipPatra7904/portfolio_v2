@@ -4,18 +4,17 @@ import "../styles/HeroSection.css";
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
 
 export default function HeroSection() {
-  const firstNameRef = useRef(null);
-  const lastNameRef = useRef(null);
-  const intervals = useRef([]);
+  const nameRef = useRef(null);
+  const intervalRef = useRef(null);
 
-  const animateName = (spanRef) => {
+  const animateName = () => {
     let iteration = 0;
-    const span = spanRef.current;
+    const span = nameRef.current;
 
-    // Clear previous interval for this span
-    if (spanRef.current.interval) clearInterval(spanRef.current.interval);
+    // Clear any previous interval
+    if (intervalRef.current) clearInterval(intervalRef.current);
 
-    spanRef.current.interval = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       span.innerText = span.dataset.value
         .split("")
         .map((letter, index) => {
@@ -24,30 +23,24 @@ export default function HeroSection() {
         })
         .join("");
 
-      if (iteration >= span.dataset.value.length) {
-        clearInterval(spanRef.current.interval);
-      }
-
       iteration += 1 / 3;
-    }, 30);
 
-    intervals.current.push(spanRef.current.interval);
+      if (iteration >= span.dataset.value.length) {
+        clearInterval(intervalRef.current);
+      }
+    }, 30);
   };
 
   useEffect(() => {
     // Initial animation
-    animateName(firstNameRef);
-    animateName(lastNameRef);
+    animateName();
 
     // Loop animation every 5 seconds
-    const loopInterval = setInterval(() => {
-      animateName(firstNameRef);
-      animateName(lastNameRef);
-    }, 5000);
+    const loopInterval = setInterval(animateName, 5000);
 
     return () => {
       clearInterval(loopInterval);
-      intervals.current.forEach((i) => clearInterval(i));
+      clearInterval(intervalRef.current);
     };
   }, []);
 
@@ -56,11 +49,8 @@ export default function HeroSection() {
       <div className="container hero-content">
         <h1 className="hero-title">
           Hi, I’m{" "}
-          <span ref={firstNameRef} data-value="SOURADIP">
-            SOURADIP
-          </span>{" "}
-          <span ref={lastNameRef} data-value="PATRA">
-            PATRA
+          <span ref={nameRef} data-value="SOURADIP PATRA">
+            SOURADIP PATRA
           </span>
         </h1>
         <p className="hero-subtitle">
