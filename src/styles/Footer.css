@@ -1,3 +1,10 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+
 .footer {
   font-size: large;
   /* border-top: 1px solid var(--border-color); */

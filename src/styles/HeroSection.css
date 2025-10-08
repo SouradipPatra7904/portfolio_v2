@@ -1,3 +1,10 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+
 .hero {
   text-align: center;
   animation: fadeRise 0.8s ease forwards;

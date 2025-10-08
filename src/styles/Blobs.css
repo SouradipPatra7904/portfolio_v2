@@ -1,3 +1,9 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
 .blob {
   position: fixed; /* stays relative to viewport */
   width: 250px;
