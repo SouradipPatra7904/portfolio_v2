@@ -155,6 +155,7 @@
 @media (max-width: 768px) {
   .terminal-window {
     font-size: 0.9rem;
+    height: 480px;
   }
   .terminal-body {
     padding: 1rem;
@@ -163,7 +164,8 @@
 
 @media (max-width: 480px) {
   .terminal-window {
-    font-size: 0.8rem;
+    font-size: 0.79rem;
+    height: 480px;
   }
 }
 
