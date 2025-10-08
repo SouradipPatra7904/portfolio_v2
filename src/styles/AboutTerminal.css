@@ -11,13 +11,15 @@
 .terminal-window {
   width: 100%;
   max-width: 800px;
-  height: 480px;
+  height: 650px; /* tall enough for all outputs */
   background-color: #000000;
   border-radius: 10px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: opacity 1.5s ease;
+  position: relative;
 }
 
 .fade-in {
@@ -28,7 +30,7 @@
   opacity: 0;
 }
 
-/* Header bar like macOS terminal */
+/* Header */
 .terminal-header {
   display: flex;
   align-items: center;
@@ -46,16 +48,9 @@
   border-radius: 50%;
   display: inline-block;
 }
-
-.red {
-  background-color: #ff5f56;
-}
-.yellow {
-  background-color: #ffbd2e;
-}
-.green {
-  background-color: #27c93f;
-}
+.red { background-color: #ff5f56; }
+.yellow { background-color: #ffbd2e; }
+.green { background-color: #27c93f; }
 
 .terminal-title {
   position: absolute;
@@ -75,18 +70,14 @@
   font-size: 0.9rem;
   transition: opacity 0.3s ease;
 }
+.replay-btn:hover { opacity: 0.7; }
 
-.replay-btn:hover {
-  opacity: 0.7;
-}
-
+/* Terminal body */
 .terminal-body {
   padding: 1.5rem;
-  min-height: 300px;
+  min-height: 550px;
   line-height: 1.6;
-  max-height: 400px;
   overflow-y: auto;
-  scroll-behavior: smooth;
 }
 
 .line {
@@ -108,123 +99,49 @@
   animation: fadeIn 0.8s ease-out;
 }
 
-/* Initial glow animations */
+/* Animations */
 @keyframes glowIn {
-  0% {
-    opacity: 0;
-    text-shadow: none;
-  }
-  100% {
-    opacity: 1;
-    text-shadow: 0 0 5px rgba(0, 255, 153, 0.6), 0 0 15px rgba(0, 255, 153, 0.3);
-  }
+  0% { opacity: 0; text-shadow: none; }
+  100% { opacity: 1; text-shadow: 0 0 5px rgba(0, 255, 153, 0.6), 0 0 15px rgba(0, 255, 153, 0.3); }
 }
 
 @keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(2px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(2px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Slow pulsing effect for old CRT glow */
 @keyframes pulse {
-  0% {
-    text-shadow: 0 0 4px rgba(0, 255, 153, 0.4), 0 0 12px rgba(0, 255, 153, 0.2);
-  }
-  50% {
-    text-shadow: 0 0 6px rgba(0, 255, 153, 0.7), 0 0 18px rgba(0, 255, 153, 0.4);
-  }
-  100% {
-    text-shadow: 0 0 5px rgba(0, 255, 153, 0.6), 0 0 15px rgba(0, 255, 153, 0.3);
-  }
+  0% { text-shadow: 0 0 4px rgba(0,255,153,0.4),0 0 12px rgba(0,255,153,0.2); }
+  50% { text-shadow: 0 0 6px rgba(0,255,153,0.7),0 0 18px rgba(0,255,153,0.4); }
+  100% { text-shadow: 0 0 5px rgba(0,255,153,0.6),0 0 15px rgba(0,255,153,0.3); }
 }
 
+.cursor { display: inline-block; width: 1ch; animation: blink 1s steps(2) infinite; }
+@keyframes blink { 0%,50%,100%{opacity:1;}25%,75%{opacity:0;} }
 
+/* CRT ambient glow */
+.terminal-window { position: relative; background-color: #000; box-shadow: 0 0 60px rgba(0,255,153,0.15); animation: glowPulse 6s ease-in-out infinite; }
+@keyframes glowPulse { 0%,100%{box-shadow:0 0 40px rgba(0,255,153,0.08);} 50%{box-shadow:0 0 60px rgba(0,255,153,0.2);} }
 
-@keyframes blink {
-  0%, 50%, 100% { opacity: 1; }
-  25%, 75% { opacity: 0; }
+/* CRT scanlines */
+.terminal-window::after {
+  content:""; position:absolute; inset:0;
+  background: repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 1px, rgba(0,255,153,0.04) 2px);
+  mix-blend-mode: overlay; pointer-events:none; animation: scanFlicker 2s infinite alternate;
 }
+@keyframes scanFlicker { 0%{opacity:0.2;}100%{opacity:0.35;} }
+
+/* Scrollbar */
+.terminal-body::-webkit-scrollbar { width: 8px; }
+.terminal-body::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius:8px; }
+.terminal-body::-webkit-scrollbar-thumb { background: linear-gradient(180deg,#00ff99 0%,#00cc88 100%); border-radius:8px; }
+.terminal-body::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg,#00ffaa 0%,#00dd99 100%); }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .terminal-window {
-    font-size: 0.9rem;
-    height: 480px;
-  }
-  .terminal-body {
-    padding: 1rem;
-  }
+  .terminal-window { font-size: 0.9rem; height: 600px; }
+  .terminal-body { padding: 1rem; }
 }
-
 @media (max-width: 480px) {
-  .terminal-window {
-    font-size: 0.79rem;
-    height: 480px;
-  }
-}
-
-
-/* === Terminal Ambient Glow === */
-.terminal-window {
-  position: relative;
-  background-color: #000;
-  box-shadow: 0 0 60px rgba(0, 255, 153, 0.15);
-  animation: glowPulse 6s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 40px rgba(0, 255, 153, 0.08); }
-  50% { box-shadow: 0 0 60px rgba(0, 255, 153, 0.2); }
-}
-
-/* === CRT Scanline Overlay === */
-.terminal-window::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0px,
-    rgba(0, 0, 0, 0) 1px,
-    rgba(0, 255, 153, 0.04) 2px
-  );
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  animation: scanFlicker 2s infinite alternate;
-}
-
-@keyframes scanFlicker {
-  0% { opacity: 0.2; }
-  100% { opacity: 0.35; }
-}
-
-/* === Theme-aware Scrollbar === */
-.terminal-body::-webkit-scrollbar {
-  width: 8px;
-}
-
-.terminal-body::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-}
-
-.terminal-body::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00ff99 0%, #00cc88 100%);
-  border-radius: 8px;
-}
-
-.terminal-body::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #00ffaa 0%, #00dd99 100%);
-}
-
-/* === Typing Flicker (optional accent) === */
-.line.command,
-.line.output {
-  text-shadow: 0 0 4px rgba(0, 255, 153, 0.4);
+  .terminal-window { font-size: 0.79rem; height: 550px; }
 }

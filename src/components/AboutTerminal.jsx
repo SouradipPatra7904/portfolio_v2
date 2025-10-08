@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import "../styles/AboutTerminal.css";
 
 export default function AboutTerminal() {
@@ -7,7 +7,6 @@ export default function AboutTerminal() {
   const [cmdIndex, setCmdIndex] = useState(0);
   const [isReplaying, setIsReplaying] = useState(false);
   const [isTypingOutput, setIsTypingOutput] = useState(false);
-  const terminalRef = useRef(null);
 
   const commands = [
     {
@@ -60,67 +59,43 @@ export default function AboutTerminal() {
       const { command, output } = commands[cmdIndex];
       let i = 0;
       let j = 0;
-      let outputTyping = false;
 
+      // Typing command first
       const typer = setInterval(() => {
-        // --- Typing the command ---
-        if (!outputTyping) {
-          setIsTypingOutput(false);
-          setCurrentText(command.slice(0, i + 1));
-          playClick();
-          i++;
+        setIsTypingOutput(false);
+        setCurrentText(command.slice(0, i + 1));
+        playClick();
+        i++;
 
-          if (terminalRef.current) {
-            terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
-          }
+        if (i === command.length) {
+          clearInterval(typer);
+          setLines((prev) => [...prev, { type: "command", text: `$ ${command}` }]);
+          setCurrentText("");
 
-          if (i === command.length) {
-            // Command typing done
-            outputTyping = true;
-            clearInterval(typer);
+          // Start typing output
+          setIsTypingOutput(true);
+          const outputTyper = setInterval(() => {
+            setCurrentText(output.slice(0, j + 1));
+            playClick();
+            j++;
 
-            setTimeout(() => {
-              // Show the completed command line
-              setLines((prev) => [
-                ...prev,
-                { type: "command", text: `$ ${command}` },
-              ]);
-
-              // Start typing output
-              setIsTypingOutput(true);
-
-              const outputTyper = setInterval(() => {
-                setCurrentText(output.slice(0, j + 1));
-                playClick();
-                j++;
-
-                if (terminalRef.current) {
-                  terminalRef.current.scrollTop =
-                    terminalRef.current.scrollHeight;
-                }
-
-                if (j === output.length) {
-                  clearInterval(outputTyper);
-                  setLines((prev) => [
-                    ...prev,
-                    { type: "output", text: output },
-                  ]);
-                  setCurrentText("");
-                  setCmdIndex((prev) => prev + 1);
-                  setIsTypingOutput(false);
-                }
-              }, 25);
-            }, 500);
-          }
+            if (j === output.length) {
+              clearInterval(outputTyper);
+              setLines((prev) => [...prev, { type: "output", text: output }]);
+              setCurrentText("");
+              setCmdIndex((prev) => prev + 1);
+              setIsTypingOutput(false);
+            }
+          }, 25);
         }
       }, 40);
 
       return () => clearInterval(typer);
     } else {
-      // Restart after 75 seconds for readability
+      // Restart loop after 75 seconds
       loopTimer = setTimeout(() => {
         handleReplay();
-      }, 7500);
+      }, 75000);
     }
 
     return () => clearTimeout(loopTimer);
@@ -134,13 +109,12 @@ export default function AboutTerminal() {
           <span className="dot yellow"></span>
           <span className="dot green"></span>
           <span className="terminal-title">about_me.sh</span>
-
           <button className="replay-btn" onClick={handleReplay}>
             ↻ Replay
           </button>
         </div>
 
-        <div className="terminal-body" ref={terminalRef}>
+        <div className="terminal-body">
           {lines.map((line, idx) => (
             <div key={idx} className={`line ${line.type}`}>
               {line.text}
@@ -148,9 +122,7 @@ export default function AboutTerminal() {
           ))}
 
           {currentText && (
-            <div
-              className={`line ${isTypingOutput ? "output" : "command"}`}
-            >
+            <div className={`line ${isTypingOutput ? "output" : "command"}`}>
               {isTypingOutput ? currentText : `$ ${currentText}`}
               <span className="cursor">|</span>
             </div>

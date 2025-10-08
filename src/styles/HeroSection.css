@@ -1,30 +1,28 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* Prevent horizontal scroll */
-}
-
-
 .hero {
   text-align: center;
   animation: fadeRise 0.8s ease forwards;
+  padding: 2rem 1rem;
 }
 
 .hero-title {
-  font-size: 2.8rem;
+  font-size: clamp(1.8rem, 6vw, 2.8rem); /* responsive sizing */
   margin-bottom: 1rem;
+  line-height: 1.2;
 }
 
 .hero-title span {
   color: var(--accent-color);
+  display: inline-block; /* prevents jump during shuffle animation */
 }
-.my-name:hover{
+
+.my-name:hover {
   color: #03f5f1;
   cursor: pointer;
   transition: var(--transition); 
 }
+
 .hero-subtitle {
-  font-size: 1.1rem;
+  font-size: clamp(0.9rem, 3vw, 1.1rem); /* responsive */
   color: var(--text-color);
   opacity: 0.8;
 }
@@ -52,5 +50,30 @@ html, body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* --- Media Queries for smaller screens --- */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+  }
+  .hero-subtitle {
+    font-size: clamp(0.85rem, 3.5vw, 1rem);
+  }
+  .cta-btn {
+    padding: 0.6rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: clamp(1.2rem, 6vw, 1.6rem);
+  }
+  .hero-subtitle {
+    font-size: clamp(0.6rem, 3vw, 0.8rem);
+  }
+  .cta-btn {
+    padding: 0.5rem 1rem;
   }
 }
