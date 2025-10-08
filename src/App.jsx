@@ -7,6 +7,7 @@ import Projects from "./components/Projects";
 import Footer from "./components/Footer";
 import Contact from "./components/Contact";
 import Blobs from "./components/Blobs";
+import AboutTerminal from "./components/AboutTerminal";
 // import ParallaxNature from "./components/ParallaxNature";
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
       <Blobs />
       <NavBar />
       <HeroSection />
-      <About />
+      <AboutTerminal />
       <Projects />
       <Contact />
       <Footer />

@@ -1,0 +1,228 @@
+.terminal-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 1rem;
+  background-color: var(--bg-color, #0a0a0a);
+  color: var(--text-color, #00ff99);
+  font-family: "Fantasque Sans Mono", monospace;
+}
+
+.terminal-window {
+  width: 100%;
+  max-width: 800px;
+  height: 480px;
+  background-color: #000000;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: opacity 1.5s ease;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+/* Header bar like macOS terminal */
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  background-color: #1a1a1a;
+  padding: 0.4rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.red {
+  background-color: #ff5f56;
+}
+.yellow {
+  background-color: #ffbd2e;
+}
+.green {
+  background-color: #27c93f;
+}
+
+.terminal-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  color: #ccc;
+  opacity: 0.6;
+}
+
+.replay-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--accent-color, #00ff99);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: opacity 0.3s ease;
+}
+
+.replay-btn:hover {
+  opacity: 0.7;
+}
+
+.terminal-body {
+  padding: 1.5rem;
+  min-height: 300px;
+  line-height: 1.6;
+  max-height: 400px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.line {
+  margin-bottom: 0.5rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.command {
+  color: var(--accent-color, #00ff99);
+  text-shadow: 0 0 5px rgba(0, 255, 153, 0.6), 0 0 15px rgba(0, 255, 153, 0.3);
+  animation: glowIn 0.5s ease-out, pulse 2.5s ease-in-out infinite alternate;
+}
+
+.output {
+  color: #b3ffcc;
+  margin-left: 1rem;
+  text-shadow: 0 0 3px rgba(179, 255, 204, 0.4);
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Initial glow animations */
+@keyframes glowIn {
+  0% {
+    opacity: 0;
+    text-shadow: none;
+  }
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 5px rgba(0, 255, 153, 0.6), 0 0 15px rgba(0, 255, 153, 0.3);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slow pulsing effect for old CRT glow */
+@keyframes pulse {
+  0% {
+    text-shadow: 0 0 4px rgba(0, 255, 153, 0.4), 0 0 12px rgba(0, 255, 153, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 6px rgba(0, 255, 153, 0.7), 0 0 18px rgba(0, 255, 153, 0.4);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(0, 255, 153, 0.6), 0 0 15px rgba(0, 255, 153, 0.3);
+  }
+}
+
+
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .terminal-window {
+    font-size: 0.9rem;
+  }
+  .terminal-body {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .terminal-window {
+    font-size: 0.8rem;
+  }
+}
+
+
+/* === Terminal Ambient Glow === */
+.terminal-window {
+  position: relative;
+  background-color: #000;
+  box-shadow: 0 0 60px rgba(0, 255, 153, 0.15);
+  animation: glowPulse 6s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(0, 255, 153, 0.08); }
+  50% { box-shadow: 0 0 60px rgba(0, 255, 153, 0.2); }
+}
+
+/* === CRT Scanline Overlay === */
+.terminal-window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 1px,
+    rgba(0, 255, 153, 0.04) 2px
+  );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  animation: scanFlicker 2s infinite alternate;
+}
+
+@keyframes scanFlicker {
+  0% { opacity: 0.2; }
+  100% { opacity: 0.35; }
+}
+
+/* === Theme-aware Scrollbar === */
+.terminal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00ff99 0%, #00cc88 100%);
+  border-radius: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00ffaa 0%, #00dd99 100%);
+}
+
+/* === Typing Flicker (optional accent) === */
+.line.command,
+.line.output {
+  text-shadow: 0 0 4px rgba(0, 255, 153, 0.4);
+}

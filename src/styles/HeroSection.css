@@ -18,7 +18,11 @@ html, body {
 .hero-title span {
   color: var(--accent-color);
 }
-
+.my-name:hover{
+  color: #03f5f1;
+  cursor: pointer;
+  transition: var(--transition); 
+}
 .hero-subtitle {
   font-size: 1.1rem;
   color: var(--text-color);
