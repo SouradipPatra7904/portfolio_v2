@@ -5,7 +5,97 @@
   --accent-color: #3b82f6;
   --border-color: #1e1e1e;
   --transition: all 0.3s ease;
+    /* dark-mode defaults (subtle, elegant) */
+  --scrollbar-track: rgba(255,255,255,0.03);
+  --scrollbar-thumb: rgba(74,163,255,0.18);   /* accent-ish, subtle */
+  --scrollbar-thumb-hover: rgba(74,163,255,0.30);
+  --scrollbar-thumb-active: rgba(74,163,255,0.45);
+  --scrollbar-size: 12px;
+  --scrollbar-radius: 999px;
+  --scrollbar-glow: 0 6px 18px rgba(74,163,255,0.07);
 }
+
+/* === SEXY GLASSMORPHIC SCROLLBAR (theme aware) === */
+
+/* Base scrollbar dimensions */
+*::-webkit-scrollbar {
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
+}
+
+/* Track — subtle translucent background */
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: var(--scrollbar-radius);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  margin: 4px;
+  transition: background-color 200ms ease;
+}
+
+/* Thumb — glassy glow, with inner depth */
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: var(--scrollbar-radius);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow: var(--scrollbar-glow),
+              inset 0 0 6px rgba(255,255,255,0.08);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition:
+    background-color 180ms ease,
+    transform 160ms ease,
+    box-shadow 180ms ease,
+    backdrop-filter 220ms ease;
+}
+
+/* Hover — increases brightness & apparent elevation */
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  transform: scale(1.06);
+  box-shadow:
+    0 4px 18px rgba(0,0,0,0.15),
+    var(--scrollbar-glow);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+
+/* Active (clicking the thumb) */
+*::-webkit-scrollbar-thumb:active {
+  background: var(--scrollbar-thumb-active);
+  transform: scale(0.97);
+  box-shadow: 0 0 0 rgba(0,0,0,0.25);
+  backdrop-filter: blur(3px) brightness(0.9);
+  -webkit-backdrop-filter: blur(3px) brightness(0.9);
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* Light mode specific tuning for realism */
+.light-mode {
+  --scrollbar-glow: 0 4px 18px rgba(59,130,246,0.15);
+}
+
+/* -------------------------
+   Accessibility / Fallbacks
+   ------------------------- */
+/* ensure keyboard users see visible focus — don't hide outlines elsewhere */
+:focus {
+  outline-offset: 3px;
+}
+
+/* small screens: slightly thinner scrollbar to avoid layout shifts */
+@media (max-width: 600px) {
+  :root {
+    --scrollbar-size: 8px;
+  }
+}
+
 
 body {
   margin: 0;
@@ -39,4 +129,9 @@ a:hover {
   --bg-color: bisque;
   --text-color: #0a0a0a;
   --border-color: #e5e5e5;
+  --scrollbar-track: rgba(0,0,0,0.04);
+  --scrollbar-thumb: rgba(59,130,246,0.20);
+  --scrollbar-thumb-hover: rgba(59,130,246,0.35);
+  --scrollbar-thumb-active: rgba(59,130,246,0.55);
 }
+

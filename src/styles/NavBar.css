@@ -1,9 +1,10 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
+/* ---------- NAVBAR BASE ---------- */
 .navbar {
   display: flex;
   align-items: center;
@@ -13,7 +14,7 @@ html, body {
   top: 0;
   background-color: var(--bg-color);
   border-bottom: 1px solid var(--border-color);
-  z-index: 10;
+  z-index: 1000;
 }
 
 .logo {
@@ -22,6 +23,7 @@ html, body {
   color: var(--accent-color);
 }
 
+/* ---------- DESKTOP NAV LINKS ---------- */
 .nav-links {
   list-style: none;
   display: flex;
@@ -30,23 +32,99 @@ html, body {
 
 .nav-links a {
   color: var(--text-color);
-  transition: var(--transition);
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
   color: var(--accent-color);
 }
 
+/* ---------- ACTIONS CONTAINER ---------- */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ---------- THEME TOGGLE ---------- */
 .theme-toggle {
   background: none;
   border: none;
   color: var(--accent-color);
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   cursor: pointer;
   transition: transform 0.5s ease, color 0.3s ease;
+  z-index: 1001;
 }
 
 .theme-toggle:hover {
   transform: rotate(25deg);
 }
 
+/* ---------- HAMBURGER ICON ---------- */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--accent-color);
+  font-size: 1.6rem;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/* ---------- MOBILE MENU PANEL ---------- */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 70%;
+  height: 100vh;
+  background: var(--bg-color);
+  box-shadow: -2px 0 20px rgba(0, 0, 0, 0.2);
+  transition: right 0.4s ease-in-out;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu.open {
+  right: 0;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  text-align: center;
+  padding: 0;
+}
+
+.mobile-menu li {
+  margin: 1.5rem 0;
+}
+
+.mobile-menu a {
+  color: var(--text-color);
+  font-size: 1.3rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.mobile-menu a:hover {
+  color: var(--accent-color);
+}
+
+/* ---------- RESPONSIVE BEHAVIOR ---------- */
+@media (max-width: 768px) {
+  .nav-links.desktop {
+    display: none; /* hide desktop links */
+  }
+
+  .menu-toggle {
+    display: block; /* show hamburger */
+  }
+
+  .navbar {
+    padding: 15px 7%;
+  }
+}
