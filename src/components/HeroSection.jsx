@@ -49,8 +49,8 @@ export default function HeroSection() {
       <div className="container hero-content">
         <h1 className="hero-title">
           Hi, I’m{" "}
-          <span ref={nameRef} data-value="SOURADIP PATRA">
-            SOURADIP PATRA
+          <span ref={nameRef} data-value="SOURADIP">
+            SOURADIP
           </span>
         </h1>
         <p className="hero-subtitle">
