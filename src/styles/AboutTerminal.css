@@ -139,9 +139,9 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .terminal-window { font-size: 0.9rem; height: 633px; }
+  .terminal-window { font-size: 0.9rem; height: 640px; }
   .terminal-body { padding: 1rem; }
 }
 @media (max-width: 480px) {
-  .terminal-window { font-size: 0.79rem; height: 522px; }
+  .terminal-window { font-size: 0.79rem; height: 530px; }
 }
