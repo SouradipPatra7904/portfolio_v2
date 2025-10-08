@@ -1,0 +1,16 @@
+.blob {
+  position: fixed; /* stays relative to viewport */
+  width: 250px;
+  height: 250px;
+  z-index: 0; /* behind content */
+  opacity: 0.25;
+  pointer-events: none; /* clicks pass through */
+  transition: transform 0.1s linear;
+}
+
+@media (max-width: 768px) {
+  .blob {
+    width: 150px;
+    height: 150px;
+  }
+}

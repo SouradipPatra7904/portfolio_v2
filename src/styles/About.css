@@ -1,0 +1,38 @@
+.about {
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--accent-color);
+  animation: riseFade 0.8s ease forwards;
+}
+
+.about-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0.5rem auto 1.5rem;
+  color: var(--text-color);
+  opacity: 0;
+  animation: riseFade 0.8s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.about-text span {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+/* Floating rising animation */
+@keyframes riseFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

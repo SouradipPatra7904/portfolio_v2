@@ -1,0 +1,38 @@
+[
+  {
+    "title": "CQRS_Banking_System",
+    "description": "A banking system powered by CQRS & Event Sourcing where every transaction is an immutable Kafka event, Quartz automates event scheduling, and read models keep queries blazing fast. ",
+    "tech": ["Java", "Spring Boot", "Apache Kafka", "PostgreSQL"],
+    "link": "https://github.com/SouradipPatra7904/CQRS_Banking_System"
+  },
+  {
+    "title": "Spring_Kafka_Job_Scheduler",
+    "description": "Enterprise-ready demonstration of a Spring Boot 'Worker Queue & Job Scheduler' application using Apache Kafka and Quartz, showcasing scalable job orchestration patterns, with Postgres as the local database server. ",
+    "tech": ["Java", "Spring Boot", "Apache Kafka", "PostgreSQL"],
+    "link": "https://github.com/SouradipPatra7904/Spring_Kafka_Job_Scheduler"
+  },
+  {
+    "title": "SpringBoot_Observability_DashBoard",
+    "description": "Observabilty Dashboard service built with SpringBoot, Micrometer & Prometheus for monitoring metrics.",
+    "tech": ["Java", "Spring Boot", "Micrometer", "Prometheus" ,"PostgreSQL"],
+    "link": "https://github.com/SouradipPatra7904/SpringBoot_Observability_DashBoard"
+  },
+  {
+    "title": "Spring_Lucene_Search_Engine",
+    "description": "A Document Search Engine & Information Retrieval System implemented in SpringBoot & Apache Lucene.",
+    "tech": ["Java", "Spring Boot", "Apache Lucene", "PostgreSQL"],
+    "link": "https://github.com/SouradipPatra7904/Spring_Lucene_Search_Engine"
+  },
+  {
+    "title": "WellRESTed",
+    "description": "An enterprise grade REST API with HATEOAS support, REST Client, SOAP communication and SOAP Client enabled.",
+    "tech": ["Java", "Spring Boot", "REST API", "PostgreSQL"],
+    "link": "https://github.com/SouradipPatra7904/WellRESTed"
+  },
+    {
+    "title": "SpringBoot_BookStore_GraphQL",
+    "description": "A SpringBoot book-store & library service API implemented in GraphQL.",
+    "tech": ["Java", "Spring Boot", "GraphQL", "PostgreSQL"],
+    "link": "https://github.com/SouradipPatra7904/SpringBoot_BookStore_GraphQL"
+  }
+]

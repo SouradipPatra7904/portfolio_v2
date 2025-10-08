@@ -1,0 +1,130 @@
+.projects {
+  text-align: center;
+  padding: 5rem 2rem;
+  background-color: transparent;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.carousel-track {
+  width: 80%;
+  max-width: 700px;
+  transition: all 0.5s ease;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nav-btn:hover {
+  color: #fff;
+}
+
+.project-card {
+  background: #121212;
+  border: 1px solid #222;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.03);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.project-card:hover {
+  /* transform: translateY(-8px); */
+  
+  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.08);
+}
+
+.project-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.description {
+  color: #aaa;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.tech-stack {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.tech {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+.tech-icon {
+  margin-right: 0.4rem;
+  color: #4aa3ff;
+}
+
+.github-link {
+  color: #4aa3ff;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.github-link:hover {
+  text-decoration: underline;
+}
+
+.carousel-dots {
+  margin-top: 1.5rem;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: #555;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dot.active {
+  background-color: #4aa3ff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carousel-track {
+    width: 95%;
+  }
+  .project-card {
+    padding: 1.5rem;
+  }
+  .nav-btn {
+    font-size: 2rem;
+  }
+}
