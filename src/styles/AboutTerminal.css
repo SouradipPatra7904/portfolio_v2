@@ -143,5 +143,5 @@
   .terminal-body { padding: 1rem; }
 }
 @media (max-width: 480px) {
-  .terminal-window { font-size: 0.79rem; height: 500px; }
+  .terminal-window { font-size: 0.79rem; height: 480px; }
 }
