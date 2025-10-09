@@ -1,79 +1,234 @@
+/* === Hero Section === */
 .hero {
-  text-align: center;
-  animation: fadeRise 0.8s ease forwards;
-  padding: 2rem 1rem;
+  animation: fadeRise 1.2s ease forwards;
+  padding: 3.5rem 2rem;
+  background: linear-gradient(-45deg, rgba(11,11,11,0.5), rgba(16,16,32,0.5), rgba(9,24,24,0.5), rgba(11,11,11,0.5));
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+  width: 70vw;
+  height: fit-content; /* prevent vertical overflow */
+  margin: 6vh auto 0;
+  border-radius: 1.35rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === Layout Wrapper === */
+.hero-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  transition: filter 0.35s ease, opacity 0.35s ease;
+}
+
+/* Apply blur to HeroSection content when bubble is active */
+.hero.blurred .hero-wrapper {
+  filter: blur(10px) brightness(0.9);
+}
+
+/* === Floating Portrait === */
+.hero-image {
+  flex: 1 1 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.photo-frame {
+  position: relative;
+  width: clamp(200px, 25vw, 400px);
+  height: clamp(200px, 25vw, 400px);
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 25px rgba(3, 245, 241, 0.2);
+  transition: all 0.5s ease;
+  animation: floatPhoto 6s ease-in-out infinite;
+}
+
+.photo-frame:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 45px rgba(3, 245, 241, 0.5);
+}
+
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(15%) contrast(1.1);
+  transition: filter 0.5s ease;
+}
+
+.photo-frame:hover .profile-pic {
+  filter: grayscale(0) contrast(1.15) brightness(1.1);
+  animation: pulseDistort 800ms ease-in-out;
+  filter: hue-rotate(10deg) saturate(1.2) brightness(1.1);
+}
+
+/* === Pulse Distortion Animation === */
+@keyframes pulseDistort {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* === Floating Animation === */
+@keyframes floatPhoto {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* === Hero Content === */
+.hero-content {
+  flex: 2 1 400px;
+  text-align: left;
+  color: var(--text-color);
+  min-width: 280px;
 }
 
 .hero-title {
-  font-size: clamp(1.8rem, 6vw, 2.8rem); /* responsive sizing */
   margin-bottom: 1rem;
   line-height: 1.2;
 }
 
-.hero-title span {
-  color: var(--accent-color);
-  display: inline-block; /* prevents jump during shuffle animation */
+.hero-title .intro {
+  display: block;
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  color: var(--accent-soft);
+  margin-bottom: 0.3rem;
+  opacity: 0.8;
 }
 
-.my-name:hover {
+.hero-title .name {
+  display: inline-block;
+  font-size: clamp(2.2rem, 6vw, 4.6rem);
+  font-weight: 850;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #03f5f1, #00d8ff, #03f5f1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glowPulse 3s infinite ease-in-out;
+  padding: 1.15rem;
+  border-radius: 1rem;
+}
+
+.cursor {
+  display: inline-block;
+  margin-left: 4px;
+  animation: blink 1s step-start infinite;
   color: #03f5f1;
-  cursor: pointer;
-  transition: var(--transition); 
+  font-weight: bold;
 }
 
 .hero-subtitle {
-  font-size: clamp(0.9rem, 3vw, 1.1rem); /* responsive */
-  color: var(--text-color);
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
   opacity: 0.8;
+  margin-top: 0.5rem;
+  max-width: 500px;
 }
 
 .cta-btn {
   display: inline-block;
   margin-top: 2rem;
   background-color: var(--accent-color);
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  transition: var(--transition);
+  color: #000;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 0.9rem 2rem;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(3, 245, 241, 0.3);
 }
 
 .cta-btn:hover {
   transform: translateY(-3px);
-  opacity: 0.9;
+  box-shadow: 0 0 25px rgba(3, 245, 241, 0.6);
+}
+
+/* === Keyframes === */
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { text-shadow: 0 0 8px rgba(3,245,241,0.4); }
+  50% { text-shadow: 0 0 24px rgba(3,245,241,0.9); }
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes fadeRise {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Fun Fact Bubble === */
+.fun-fact-bubble {
+  position: absolute;
+  top: 20%;
+  right: 5%;
+  width: 280px;
+  background: rgba(30, 30, 30, 0.85);
+  color: white;
+  border-radius: 1rem;
+  padding: 1.5rem 1.2rem;
+  opacity: 0;
+  transform: scale(0);
+  transform-origin: top right;
+  transition: all 0.35s ease;
+  backdrop-filter: blur(1rem);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  z-index: 11; /* above blur layer */
+}
+
+.fun-fact-bubble.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (min-width: 768px) {
+  .fun-fact-bubble {
+    width: 350px;
+    padding: 1.8rem 1.5rem;
+    font-size: 1.05rem;
   }
 }
 
-/* --- Media Queries for smaller screens --- */
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: clamp(1.6rem, 7vw, 2.2rem);
-  }
-  .hero-subtitle {
-    font-size: clamp(0.85rem, 3.5vw, 1rem);
-  }
-  .cta-btn {
-    padding: 0.6rem 1.2rem;
-  }
+/* === Info Button === */
+.hero-info-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  padding: 0.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 12; /* above blur */
 }
 
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: clamp(1.2rem, 6vw, 1.6rem);
-  }
-  .hero-subtitle {
-    font-size: clamp(0.6rem, 3vw, 0.8rem);
-  }
-  .cta-btn {
-    padding: 0.5rem 1rem;
-  }
+.hero-info-btn.active {
+  background: rgba(255, 70, 70, 0.25);
+  transform: rotate(90deg);
+}
+
+/* === Subtle fade animation === */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

@@ -193,20 +193,20 @@ html, body {
     padding: 3rem 1.2rem;
   }
   .project-card {
-    padding: 1.2rem;
+    padding: 0.85rem;
   }
   .project-title {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
   .description {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
   }
   .tech {
     font-size: 0.75rem;
     padding: 0.3rem 0.6rem;
   }
   .github-link, .live-link {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     padding: 0.45rem 0.9rem;
   }
 }
