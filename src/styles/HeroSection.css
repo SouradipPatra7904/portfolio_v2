@@ -2,7 +2,7 @@
 .hero {
   animation: fadeRise 1.2s ease forwards;
   padding: 3.5rem 2rem;
-  background: linear-gradient(-45deg, rgba(11,11,11,0.5), rgba(16,16,32,0.5), rgba(9,24,24,0.5), rgba(11,11,11,0.5));
+  background: linear-gradient(-45deg, rgba(11,11,11, 0.85), rgba(16,16,32, 0.85), rgba(9,24,24, 0.85), rgba(11,11,11, 0.85));
   background-size: 400% 400%;
   animation: gradientMove 15s ease infinite;
   width: 70vw;
@@ -10,6 +10,7 @@
   margin: 6vh auto 0;
   border-radius: 1.35rem;
   position: relative;
+  top: 5vh;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -27,6 +28,10 @@
   margin: 0 auto;
   flex-wrap: wrap;
   transition: filter 0.35s ease, opacity 0.35s ease;
+}
+
+body.light-mode .hero-wrapper {
+  color: aqua;
 }
 
 /* Apply blur to HeroSection content when bubble is active */
@@ -105,7 +110,12 @@
   color: var(--accent-soft);
   margin-bottom: 0.3rem;
   opacity: 0.8;
+
+  .light-mode & {
+    color: var(--bg-color);
+  }
 }
+
 
 .hero-title .name {
   display: inline-block;
@@ -122,19 +132,16 @@
   border-radius: 1rem;
 }
 
-.cursor {
-  display: inline-block;
-  margin-left: 4px;
-  animation: blink 1s step-start infinite;
-  color: #03f5f1;
-  font-weight: bold;
-}
 
 .hero-subtitle {
   font-size: clamp(0.9rem, 3vw, 1.1rem);
   opacity: 0.8;
   margin-top: 0.5rem;
   max-width: 500px;
+
+    .light-mode & {
+    color: var(--bg-color);
+  }
 }
 
 .cta-btn {
@@ -183,7 +190,7 @@
   right: 5%;
   width: 280px;
   background: rgba(30, 30, 30, 0.85);
-  color: white;
+  color: rgb(0, 255, 238);
   border-radius: 1rem;
   padding: 1.5rem 1.2rem;
   opacity: 0;
@@ -192,19 +199,47 @@
   transition: all 0.35s ease;
   backdrop-filter: blur(1rem);
   box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-  z-index: 11; /* above blur layer */
+  z-index: 17; /* above blur layer */
+  font-size: 1.5rem;
 }
 
+.cycle-btn{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 255, 238, 0.75);
+  border: none;
+  border-radius: 50%;
+  padding: 0.4rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  &:hover {
+    background: rgb(0, 255, 153, 1);
+    cursor: pointer;
+  }
+}
 .fun-fact-bubble.show {
   opacity: 1;
   transform: scale(1);
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .fun-fact-bubble {
-    width: 350px;
-    padding: 1.8rem 1.5rem;
-    font-size: 1.05rem;
+    height: 30vh;
+    max-width: 65vw;
+    padding: 1.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .fun-fact-bubble {
+    height: 30vh;
+    max-width: 65vw;
+    padding: 0.8rem 0.5rem;
+    font-size: 1.5rem;
+    text-align: center;
   }
 }
 
@@ -214,21 +249,120 @@
   top: 1.5rem;
   right: 2rem;
   border: none;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 255, 208, 0.5);
   border-radius: 50%;
   padding: 0.6rem;
   cursor: pointer;
   transition: all 0.3s ease;
   z-index: 12; /* above blur */
+
+  &:hover {
+    background: rgba(0, 255, 208, 1);
+    cursor: pointer;
+  }
 }
 
 .hero-info-btn.active {
-  background: rgba(255, 70, 70, 0.25);
+  background: rgba(253, 77, 0, 1);
   transform: rotate(90deg);
+
+  &:hover{
+    background: rgb(255, 0, 0);
+    cursor: pointer;
+  }
 }
 
 /* === Subtle fade animation === */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+
+/* === Technical Skills Bubble === */
+.hero-tech-btn {
+  position: absolute;
+  top: 1.5rem;
+  right: 4.5rem; /* separate from fun-fact button */
+  border: none;
+  background: rgba(0, 208, 255, 0.5);
+  border-radius: 50%;
+  padding: 0.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 12;
+
+  &:hover {
+    background: rgba(0, 208, 255, 1);
+    cursor: pointer;
+  }
+}
+
+.hero-tech-btn.active {
+  background: rgba(0, 120, 255, 1);
+  transform: rotate(90deg);
+
+  &:hover {
+    background: rgb(0, 80, 255);
+    cursor: pointer;
+  }
+}
+
+.tech-skill-bubble {
+  position: absolute;
+  top: 20%;
+  right: 4.5rem;
+  width: 60vw;
+  height: 40vh;
+  background: rgba(30, 30, 30, 0.85);
+  color: rgb(0, 255, 238);
+  border-radius: 1rem;
+  padding: 1.5rem 1.2rem;
+  opacity: 0;
+  transform: scale(0);
+  transform-origin: top right;
+  transition: all 0.35s ease;
+  backdrop-filter: blur(1rem);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  z-index: 17;
+  font-size: 1.5rem;
+  font-size: 1rem;
+}
+
+.tech-skill-bubble ul {
+  padding-left: 1.2rem;
+}
+
+.tech-skill-bubble li {
+  margin: 0.8rem 0;
+}
+
+.tech-skill-bubble.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Responsive adjustments (like fun-fact) */
+@media (max-width: 768px) {
+  .tech-skill-bubble {
+    top: 15%;
+    right: 5%;
+    width: 65vw;
+  height: 40vh;
+    font-size: 1rem;
+    padding: 1rem;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .tech-skill-bubble {
+    top: 15%;
+    right: 5%;
+    width: 65vw;
+  height: 40vh;
+    font-size: 1rem;
+    padding: 0.8rem;
+    text-align: left;
+  }
 }

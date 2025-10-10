@@ -2,7 +2,12 @@ import { useState, useRef, useEffect } from "react";
 import "../styles/HeroSection.css";
 import profileImg from "../icons/best-pic-2.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle, faXmark, faRefresh } from "@fortawesome/free-solid-svg-icons";
+import {
+  faInfoCircle,
+  faXmark,
+  faRefresh,
+  faCode
+} from "@fortawesome/free-solid-svg-icons";
 
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
 
@@ -42,6 +47,7 @@ export default function HeroSection() {
     };
   }, []);
 
+  // === Fun Facts ===
   const funFacts = [
     "This guy is doing Java from the age of 14, can you believe it?! 💀",
     "Do you know where's the source code for a happy love life? This dude desperately needs it 😭",
@@ -56,21 +62,53 @@ export default function HeroSection() {
 
   const nextFact = () => setCurrentFact((prev) => (prev + 1) % funFacts.length);
 
-  // Close on outside click
+  // === Technical Skills ===
+  const techSkills = [
+    "Java 17+ / Spring Boot 3.x",
+    "Microservices & Saga Pattern",
+    "Kafka & Event-driven Systems",
+    "PostgreSQL",
+    "REST & HTTP APIs",
+    "HTML5, CSS, JavaScript",
+    "React.js, SCSS",
+    "Linux & Bash Scripting",
+    "Git / CI-CD / Docker"
+  ];
+
+  const [showTech, setShowTech] = useState(false);
+
+  // Close bubbles on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
-      const bubble = document.querySelector(".fun-fact-bubble");
-      const btn = document.querySelector(".hero-info-btn");
-      if (showFact && bubble && !bubble.contains(e.target) && !btn.contains(e.target)) {
+      const factBubble = document.querySelector(".fun-fact-bubble");
+      const factBtn = document.querySelector(".hero-info-btn");
+      const techBubble = document.querySelector(".tech-skill-bubble");
+      const techBtn = document.querySelector(".hero-tech-btn");
+
+      if (
+        showFact &&
+        factBubble &&
+        !factBubble.contains(e.target) &&
+        !factBtn.contains(e.target)
+      ) {
         setShowFact(false);
+      }
+
+      if (
+        showTech &&
+        techBubble &&
+        !techBubble.contains(e.target) &&
+        !techBtn.contains(e.target)
+      ) {
+        setShowTech(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [showFact]);
+  }, [showFact, showTech]);
 
   return (
-    <section className={`hero section ${showFact ? "blurred" : ""}`}>
+    <section className={`hero section ${showFact || showTech ? "blurred" : ""}`}>
       {/* === Hero Main Content === */}
       <div className="container hero-wrapper">
         <div className="hero-image">
@@ -88,7 +126,7 @@ export default function HeroSection() {
           </h1>
 
           <p className="hero-subtitle">
-            Turning concurrency, Kafka, and curiosity into clean, scalable systems.
+            Turning concurrency, Spring Boot, & curiosity into clean, scalable systems.
           </p>
 
           <a href="#projects" className="cta-btn">
@@ -97,7 +135,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* === Info Circle === */}
+      {/* === Fun Fact Button & Bubble === */}
       <button
         className={`hero-info-btn ${showFact ? "active" : ""}`}
         onClick={() => setShowFact(!showFact)}
@@ -106,12 +144,28 @@ export default function HeroSection() {
         <FontAwesomeIcon icon={showFact ? faXmark : faInfoCircle} size="22px" />
       </button>
 
-      {/* === Fun Fact Bubble === */}
       <div className={`fun-fact-bubble ${showFact ? "show" : ""}`}>
         <p>{funFacts[currentFact]}</p>
         <button className="cycle-btn" onClick={nextFact} aria-label="Next Fact">
           <FontAwesomeIcon icon={faRefresh} size="22px" rotation={180} />
         </button>
+      </div>
+
+      {/* === Technical Skills Button & Bubble === */}
+      <button
+        className={`hero-tech-btn ${showTech ? "active" : ""}`}
+        onClick={() => setShowTech(!showTech)}
+        aria-label="Technical Skills"
+      >
+        <FontAwesomeIcon icon={showTech ? faXmark : faCode} size="22px" />
+      </button>
+
+      <div className={`tech-skill-bubble ${showTech ? "show" : ""}`}>
+        <ul>
+          {techSkills.map((skill, idx) => (
+            <li key={idx}>{skill}</li>
+          ))}
+        </ul>
       </div>
     </section>
   );

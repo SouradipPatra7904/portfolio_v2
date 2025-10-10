@@ -34,13 +34,16 @@ export default function AboutTerminal() {
     },
   ];
 
-  const playClick = () => {
+  /**  
+   *   const playClick = () => {
     const audio = new Audio(
       "https://cdn.pixabay.com/audio/2022/03/15/audio_5d183d93e4.mp3"
     );
     audio.volume = 0.07;
     audio.play().catch(() => {});
   };
+  */
+
 
   const handleReplay = () => {
     setIsReplaying(true);
@@ -76,7 +79,7 @@ export default function AboutTerminal() {
         if (!outputTyping) {
           setIsTypingOutput(false);
           setCurrentText(command.slice(0, i + 1));
-          playClick();
+          //playClick();
           i++;
 
           if (i === command.length) {
@@ -89,7 +92,7 @@ export default function AboutTerminal() {
 
               const outputTyper = setInterval(() => {
                 setCurrentText(output.slice(0, j + 1));
-                playClick();
+                //playClick();
                 j++;
 
                 if (j === output.length) {

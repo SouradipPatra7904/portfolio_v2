@@ -1,0 +1,199 @@
+/* ==================================================
+   Interactive "Man Page" Info Button (NavBar)
+   ================================================== */
+
+.nav-info-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===============================
+   Info Circle Button
+   =============================== */
+.info-circle {
+  background: var(--accent-color);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-on-accent);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 101;
+  font-size: 1.5rem;
+
+  &:hover {
+    transform: scale(1.25);
+    background: var(--accent-hover);
+  }
+
+  &.active {
+    transform: rotate(90deg) scale(1.15);
+    background: var(--accent-active);
+    box-shadow: 0 0 18px var(--accent-color);
+  }
+}
+
+/* ===============================
+   Backdrop Blur (below NavBar only)
+   =============================== */
+.manpage-backdrop {
+  position: fixed;
+  top: var(--navbar-height, 60px);
+  left: 0;
+  width: 100%;
+  height: calc(100vh - var(--navbar-height, 60px));
+  backdrop-filter: blur(18px);
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 99;
+  animation: fadeInBackdrop 0.3s ease forwards;
+}
+
+@keyframes fadeInBackdrop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ===============================
+   Info Bubble
+   =============================== */
+.manpage-bubble {
+  position: absolute;
+
+  top: 54px;
+  right: 1px;
+  
+  transform: scale(0.2);
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: top right;
+  border-radius: 1rem;
+  width: 40vw;
+  height: 40vh;
+  padding: 1.25rem 1.4rem;
+  z-index: 102;
+  background: var(--manpage-bg);
+  color: var(--manpage-text);
+  /* backdrop-filter: blur(15px); */
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--accent-color);
+  transition: transform 0.4s ease, opacity 0.35s ease;
+  animation: pulseGlow 3s ease-in-out infinite;
+
+  &.show {
+    transform: scale(1);
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  h3 {
+    text-align: center;
+    margin: 0 0 0.6rem;
+    font-weight: 600;
+    font-size: 1rem;
+
+      .light-mode & {
+    color: bisque;
+  }
+  }
+
+  ul {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    font-size: 0.9rem;
+
+    li {
+      margin-bottom: 0.5rem;
+
+      &::before {
+        content: "▸ ";
+        color: var(--accent-color);
+        font-weight: bold;
+      }
+    }
+
+      .light-mode & {
+    color: bisque;
+  }
+  }
+
+  .close-btn {
+    width: 100%;
+    background: var(--accent-color);
+    color: var(--text-on-accent);
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--accent-hover);
+    }
+  }
+}
+
+/* ===============================
+   Subtle Pulse Glow
+   =============================== */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(3, 245, 241, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(3, 245, 241, 0.55);
+  }
+}
+
+/* ===============================
+   Theme Contrast Awareness
+   =============================== */
+:root.light-theme {
+  --accent-color: #0078ff;
+  --accent-hover: #3394ff;
+  --accent-active: #0056cc;
+  --text-on-accent: #fff;
+  --manpage-bg: rgba(255, 255, 255, 0.85);
+  --manpage-text: #111;
+}
+
+:root.dark-theme {
+  --accent-color: #7aa2ff;
+  --accent-hover: #9db6ff;
+  --accent-active: #6085ff;
+  --text-on-accent: #fff;
+  --manpage-bg: rgba(10, 10, 20, 0.9);
+  --manpage-text: #e6e6e6;
+}
+
+/* ===============================
+   Responsive (small screens)
+   =============================== */
+@media (max-width: 768px) {
+  .manpage-bubble {
+    top: 54px;
+    right: 1px;
+    width: 40vw;
+    height: 50vh;
+    font-size: 0.85rem;
+    transform-origin: top right;
+  }
+}
+
+@media (max-width: 480px) {
+  .manpage-bubble {
+    
+    top: 54px;
+    right: 1px;
+    width: 40vw;
+    height: 50vh;
+    font-size: 0.85rem;
+    transform-origin: top right;
+  }
+}
